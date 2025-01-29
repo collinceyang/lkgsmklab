@@ -1,8 +1,8 @@
 # lkgsmklab
 # restful api to provide lkg smoke stack info
 
-cd ~/app
-python3 -m venv ~/app
+cd ~/lkgsmklab
+python3 -m venv ~/lkgsmklab
 
 #activate venv 
 source bin/activate

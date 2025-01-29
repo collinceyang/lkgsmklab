@@ -1,0 +1,79 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Navi Host Status Information</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+     <style>
+        .offline {
+            color: red;
+        }
+    </style>
+    <style>
+       .issue{
+           color: red;
+       }
+    </style>
+    <style>
+        .Enable{
+           color: red;
+	}
+    </style>
+
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Lab Navi Host Status </h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>sut_name</th>
+                    <th>pikvm_host</th>
+                    <th>hdt_ip</th>
+                    <th>secure</th>
+                    <th>postcode</th>
+                    <th>ping</th>
+                    <th>display</th>
+                    <th>state</th>
+                    <th>target_gpu</th>
+                    <th>sku</th>
+                    <th>sku_driver</th>
+                    <th>os</th>
+                    <th>igpu</th>
+                    <th>location</th>
+                    <th>lab</th>
+                    <th>ifwi_date</th>
+                    <th>pdu_host</th>
+                    <th>outlet_number</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in lab_data %}
+                <tr>
+                    <td>{{ item.sut_name }}</td>
+                    <td>{{ item.pikvm_host }}</td>
+                    <td>{{ item.hdt_ip }}</td>
+                    <td>{{ item.secure }}</td>
+                    <td>{{ item.postcode }}</td>
+                    <td class="{% if item.ping == 'offline' %}offline{% endif %}"> {{ item.ping }}</td>
+                    <td class="{% if item.display == 'issue' %}issue{% endif %}"> {{ item.display }}</td>
+                    <td>{{ item.state }}</td>
+                    <td>{{ item.target_gpu }}</td>
+                    <td>{{ item.sku }}</td>
+                    <td>{{ item.sku_driver }}</td>
+                    <td>{{ item.os }}</td>
+                    <td class="{% if item.igpu == 'Enable' %}Enable{% endif %}">{{ item.igpu }}</td>
+                    <td>{{ item.location }}</td>
+                    <td>{{ item.lab }}</td>
+                    <td>{{ item.ifwi_date }}</td>
+                    <td>{{ item.pdu_host }}</td>
+                    <td>{{ item.outlet_number }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

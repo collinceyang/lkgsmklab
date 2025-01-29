@@ -1,0 +1,23 @@
+[
+    {
+       "sku":"7900XTX",
+       "firmware_path":"https://www.techpowerup.com/vgabios/268524/XFX.RX7900XTX.24576.221115.rom",
+       "target_gpu":"rdna3",
+       "manufacturer":"XFX",
+       "name":"RX7900XTX"
+    },
+    {
+       "sku":"7900XT",
+       "firmware_path":"https://www.techpowerup.com/vgabios/253733/Sapphire.RX7900XT.20480.221129.rom",
+       "target_gpu":"rdna3",
+       "manufacturer":"Sapphire",
+       "name":"RX7900XT"
+    },
+    {
+       "sku":"7800XT",
+       "firmware_path":"https://www.techpowerup.com/vgabios/260662/AMD.RX7800XT.16384.230714.rom",
+       "target_gpu":"rdna3",
+       "manufacturer":"AMD",
+       "name":"RX7800XT"
+    }
+ ]

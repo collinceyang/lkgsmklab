@@ -4,15 +4,10 @@ import socket
 import time
 from datetime import datetime, timezone
 from typing import Dict
-from dotenv import load_dotenv
 import requests
-from requests.auth import HTTPBasicAuth
-from fastapi import FastAPI, Depends, HTTPException, status
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from fastapi.requests import Request
-
 
 
 # Load JSON data for navi lab
@@ -36,31 +31,13 @@ expected_postcode = "200,201,202,203"
 #####
 
 ####
-load_dotenv()
-artifactory_auth = os.getenv('artifactory_auth')
-sut_key = os.getenv('sut_key')
-sdu_passwd = os.getenv('sdu_passwd')
-web_user = os.getenv('web_user')
-web_passwd = os.getenv('web_passwd')
-pikvm_auth = os.getenv('pikvm_auth')
+
 ####
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
-security = HTTPBasic()
-fake_db: Dict[str, str] = {
-    web_user: web_passwd
-}
-
 @app.get("/", response_class=HTMLResponse)
-async def read_root_credential(request: Request, credentials: HTTPBasicCredentials = Depends(security)):
-    correct_username = fake_db.get(credentials.username)
-    if correct_username is None or correct_username != credentials.password:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Basic"},
-        )
+async def read_root(request: Request):
     return templates.TemplateResponse("lab.html", {"request": request, "lab_data": data_lab})
 
 #response list of sut_name

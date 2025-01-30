@@ -1,6 +1,6 @@
 [
     {
-       "sut_name":"gpuopen.com/",
+       "sut_name":"gpuopen.com",
        "pikvm_host":"test-station-25-pikvm.leadai.com",
        "hdt_ip":"jtag-cf.leadai.com",
        "secure":"Unsecured",

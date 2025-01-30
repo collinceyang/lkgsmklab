@@ -23,7 +23,7 @@ with open("smk_navi_ifwi.json") as smk_f:
 with open("lkg_ror.json") as ror_lkg:
     data_ror = json.load(ror_lkg)
 
-hostname = socket.gethostname()
+
 expected_postcode = "200,201,202,203"
 
 #####
@@ -39,6 +39,14 @@ templates = Jinja2Templates(directory="templates")
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
     return templates.TemplateResponse("lab.html", {"request": request, "lab_data": data_lab})
+
+#response current hostname
+@app.get("/get_hostname")
+def get_hostname():
+    hostname = socket.gethostname()
+    print(hostname)
+    hostname_dict = {"host":hostname}
+    return hostname_dict
 
 #response list of sut_name
 @app.get("/list_sut")

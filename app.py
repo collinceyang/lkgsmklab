@@ -56,7 +56,7 @@ def get_sut_list():
     for each in data_lab:
         sut_list.append(each["sut_name"])
     sut_list_dict["sut_list"] = sut_list
-    print(sut_list)
+    sut_list_dict["from_host"] = socket.gethostname()
     print(sut_list_dict)
     return sut_list_dict
 
@@ -67,12 +67,13 @@ def get_sku_list():
     for each in data_lkg:
         sku_list.append(each["sku"])
     sku_list_dict["sku_list"] = sku_list
-    print(sku_list)
+    sku_list_dict["from_host"] = socket.gethostname()
     print(sku_list_dict)
     return sku_list_dict
 
 @app.get("/get_ror")
 def get_ror_lkg():
+    data_ror["from_host"] = socket.gethostname()
     print(data_ror)
     return data_ror
 
@@ -110,6 +111,7 @@ def get_skulkg_json(sku: str):
         for each in data_lkg:
             if each["sku"] == sku:
                 print(f"find json data of {sku}!!!")
+                each["from_host"] = socket.gethostname()
                 print(each)
                 return each
             else:
@@ -126,6 +128,7 @@ def get_skusmk_json(sku: str):
         for each in data_smk:
             if each["sku"] == sku:
                 print(f"find json data of {sku}!!!")
+                each["from_host"] = socket.gethostname()
                 print(each)
                 return each
             else:
@@ -142,6 +145,7 @@ def get_sut_json(sut_name: str):
         for each in data_lab:
             if each["sut_name"] == sut_name:
                 print(f"find json data of {sut_name}!!!")
+                each["from_host"] = socket.gethostname()
                 print(each)
                 return each
             else:

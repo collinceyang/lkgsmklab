@@ -157,6 +157,7 @@ def get_sut_json(sut_name: str):
 
 #response set of lkg of ror
 @app.post("/set_ror/{amdgpuid_rocmid}")
+@app.put("/set_ror/{amdgpuid_rocmid}")
 async def set_ror(amdgpuid_rocmid: str):
     amdgpu_id, rocm_id = amdgpuid_rocmid.split("_")
     print(f'amdgpu_id is set to {amdgpu_id}')
@@ -167,6 +168,7 @@ async def set_ror(amdgpuid_rocmid: str):
 
 #response set of lkg of navi GPU by SKU
 @app.post("/set_sku_lkg/{sku}/{ifwi_path}")
+@app.put("/set_sku_lkg/{sku}/{ifwi_path}")
 async def set_sku_lkg(sku: str, ifwi_path: str):
     for each in data_lkg:
         if sku == each["sku"]:
@@ -182,6 +184,7 @@ async def set_sku_lkg(sku: str, ifwi_path: str):
 
 #response set of smk of navi GPU by SKU
 @app.post("/set_sku_smk/{sku}/{ifwi_path}")
+@app.put("/set_sku_smk/{sku}/{ifwi_path}")
 async def set_sku_smk(sku: str, ifwi_path: str):
     for each in data_lkg:
         if sku == each["sku"]:

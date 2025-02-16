@@ -11,7 +11,7 @@ variables:
   azureServiceConnectionId: 'b5100760-8405-4746-a174-00532da7e564'
 
   # Web app name
-  webAppName: ''
+  webAppName: 'fastapi'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'

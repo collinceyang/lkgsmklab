@@ -10,7 +10,7 @@ variables:
   # Azure Resource Manager connection created during pipeline creation
   azureServiceConnectionId: 'b5100760-8405-4746-a174-00532da7e564'
 
-  # Web app name
+  # Web app name fastapi
   webAppName: 'fastapi'
 
   # Agent VM image name

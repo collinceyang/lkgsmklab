@@ -104,7 +104,7 @@ stages:
               scriptType: 'bash'
               scriptLocation: 'inlineScript'
               inlineScript: |
-                az webapp ssh --name $(webAppName) --resource-group YOUR_RESOURCE_GROUP_NAME
+                az webapp ssh --name $(webAppName) --resource-group fastapi_group-ab84
             displayName: "SSH into Azure Web App"
             
           # Verify unzipped files inside Web App
@@ -114,6 +114,6 @@ stages:
               scriptType: 'bash'
               scriptLocation: 'inlineScript'
               inlineScript: |
-                az webapp ssh --name $(webAppName) --resource-group YOUR_RESOURCE_GROUP_NAME --command "ls -lh /home/site/wwwroot/"
+                az webapp ssh --name $(webAppName) --resource-group fastapi_group-ab84 --command "ls -lh /home/site/wwwroot/"
             displayName: "List Web App Files"
 

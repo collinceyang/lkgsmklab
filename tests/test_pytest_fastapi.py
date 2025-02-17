@@ -7,7 +7,7 @@ from requests.auth import HTTPBasicAuth
 
 # function to get rest api response
 def get_rest_api_response(end_point):
-    url = f"http://localhost:8000/{end_point}"
+    url = f"http://localhost:80/{end_point}"
     response = requests.get(url)
     if response.status_code == 200:
         json_str = json.dumps(response.json(), indent=4)
@@ -25,7 +25,7 @@ def set_ror_api(timestamp1):
     amdgpuid = timestamp1
     rocmid = str(timestamp2)
     set_endpoint =  "set_ror"
-    url = f"http://localhost:8000/{set_endpoint}/{amdgpuid}_{rocmid}"
+    url = f"http://localhost:80/{set_endpoint}/{amdgpuid}_{rocmid}"
     # print(url)
     # response = requests.post(url)
     response = requests.put(url)
@@ -44,7 +44,7 @@ def get_set_ror_api(timestamp1):
     amdgpuid = timestamp1
     rocmid = str(timestamp2)
     get_endpoint =  "get_ror"
-    url = f"http://localhost:8000/{get_endpoint}"
+    url = f"http://localhost:80/{get_endpoint}"
     response = requests.get(url)
     if response.status_code == 200:
         # json_str = json.dumps(response.json(), indent=4)

@@ -13,7 +13,7 @@ amdgpuid = timestamp1
 rocmid = str(timestamp2)
 
 set_endpoint =  "set_ror"
-url = f"http://localhost:8000/{set_endpoint}/{amdgpuid}_{rocmid}"
+url = f"http://localhost:80/{set_endpoint}/{amdgpuid}_{rocmid}"
 print(url)
 # response = requests.post(url)
 response = requests.put(url)
@@ -25,7 +25,7 @@ else:
     print("Error:", response.status_code, response.text)
 
 get_endpoint =  "get_ror"
-url = f"http://localhost:8000/{get_endpoint}"
+url = f"http://localhost:80/{get_endpoint}"
 
 response = requests.get(url)
 if response.status_code == 200:

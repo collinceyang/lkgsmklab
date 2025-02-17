@@ -80,9 +80,12 @@ stages:
             displayName: 'Use Python version'
 
           - script: |
+              sudo apt-get update && sudo apt-get install -y unzip
               ls -lh $(Pipeline.Workspace)/drop/
-              unzip -l unzip -l $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
-            displayName: "Debug: List Deployment Package"
+              FILE=$(ls $(Pipeline.Workspace)/drop/*.zip)
+              echo "Found ZIP file: $FILE"
+              unzip -l "$FILE"
+            displayName: "Fix: Install unzip and List ZIP Content"
 
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App : '

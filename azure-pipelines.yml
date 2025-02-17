@@ -81,6 +81,7 @@ stages:
 
           - script: |
               ls -lh $(Pipeline.Workspace)/drop/
+              unzip -l $(Pipeline.Workspace)/drop/
             displayName: "Debug: List Deployment Package"
 
           - task: AzureWebApp@1
@@ -90,6 +91,9 @@ stages:
               appName: $(webAppName)
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
 
+          - script: |
+              ls -l /home/site/wwwroot
+
           # Install Python Virtual Environment
           - script: |
               python -m venv antenv
@@ -97,7 +101,7 @@ stages:
               python -m pip install --upgrade pip
               pip install -r requirements.txt
             displayName: 'Setup Virtual Environment'
-            
+
           # Run Uvicorn after deployment
           - script: |
               source antenv/bin/activate

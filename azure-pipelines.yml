@@ -81,7 +81,7 @@ stages:
 
           - script: |
               ls -lh $(Pipeline.Workspace)/drop/
-              unzip -l $(Pipeline.Workspace)/drop/
+              unzip -l unzip -l $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
             displayName: "Debug: List Deployment Package"
 
           - task: AzureWebApp@1

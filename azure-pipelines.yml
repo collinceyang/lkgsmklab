@@ -11,10 +11,10 @@ variables:
   azureServiceConnectionId: 'b5100760-8405-4746-a174-00532da7e564'
 
   # Web app name
-  webAppName: 'restweb'
+  webAppName: 'newrestweb'
 
   # Web app resource group name
-  webAppResourceGroupName: 'restweb_group'
+  webAppResourceGroupName: 'newrestweb_group'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -40,14 +40,14 @@ stages:
         versionSpec: '$(pythonVersion)'
       displayName: 'Use Python $(pythonVersion)'
 
-    - script: |
-        python -m venv antenv
-        source antenv/bin/activate
-        python -m pip install --upgrade pip
-        pip install setup
-        pip install -r requirements.txt
-      workingDirectory: $(projectRoot)
-      displayName: "Install requirements"
+    # - script: |
+    #     python -m venv antenv
+    #     source antenv/bin/activate
+    #     python -m pip install --upgrade pip
+    #     pip install setup
+    #     pip install -r requirements.txt
+    #   workingDirectory: $(projectRoot)
+    #   displayName: "Install requirements"
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'

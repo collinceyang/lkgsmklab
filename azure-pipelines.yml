@@ -85,3 +85,10 @@ stages:
               azureSubscription: $(azureServiceConnectionId)
               appName: $(webAppName)
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+
+          # Run Uvicorn after deployment
+          - script: |
+              chmod +x ./bin/uvicorn
+              ./bin/uvicorn app:app --host 0.0.0.0 --port 80 --workers 4
+            workingDirectory: $(projectRoot)
+            displayName: "Start Uvicorn Server"

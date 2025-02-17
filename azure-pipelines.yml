@@ -96,42 +96,40 @@ stages:
               appName: $(webAppName)
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
 
-          - script: |
-              ls 
-            displayName: "after deploy web ls current folder content"
 
-          - task: AzureCLI@2
-            inputs:
-              azureSubscription: $(azureServiceConnectionId)
-              scriptType: 'bash'
-              scriptLocation: 'inlineScript'
-              inlineScript: |
-                az webapp log tail --name $(webAppName) --resource-group $(webAppResourceGroupName)
-            displayName: "Tail Web App Logs"
 
-          - script: |
-              # Wait for the app to be ready before attempting SSH connection
-              sleep 60  # Wait for 1 minute
-              az webapp ssh --name $(webAppName) --resource-group $(webAppResourceGroupName)
-            displayName: "Wait for App to Start and SSH"
+          # - task: AzureCLI@2
+          #   inputs:
+          #     azureSubscription: $(azureServiceConnectionId)
+          #     scriptType: 'bash'
+          #     scriptLocation: 'inlineScript'
+          #     inlineScript: |
+          #       az webapp log tail --name $(webAppName) --resource-group $(webAppResourceGroupName)
+          #   displayName: "Tail Web App Logs"
+
+          # - script: |
+          #     # Wait for the app to be ready before attempting SSH connection
+          #     sleep 60  # Wait for 1 minute
+          #     az webapp ssh --name $(webAppName) --resource-group $(webAppResourceGroupName)
+          #   displayName: "Wait for App to Start and SSH"
 
           # Debug: SSH into Web App and list files
-          - task: AzureCLI@2
-            inputs:
-              azureSubscription: $(azureServiceConnectionId)
-              scriptType: 'bash'
-              scriptLocation: 'inlineScript'
-              inlineScript: |
-                az webapp ssh --name $(webAppName) --resource-group $(webAppResourceGroupName)
-            displayName: "SSH into Azure Web App"
+          # - task: AzureCLI@2
+          #   inputs:
+          #     azureSubscription: $(azureServiceConnectionId)
+          #     scriptType: 'bash'
+          #     scriptLocation: 'inlineScript'
+          #     inlineScript: |
+          #       az webapp ssh --name $(webAppName) --resource-group $(webAppResourceGroupName)
+          #   displayName: "SSH into Azure Web App"
             
           # Verify unzipped files inside Web App
-          - task: AzureCLI@2
-            inputs:
-              azureSubscription: $(azureServiceConnectionId)
-              scriptType: 'bash'
-              scriptLocation: 'inlineScript'
-              inlineScript: |
-                az webapp ssh --name $(webAppName) --resource-group $(webAppResourceGroupName) --command "ls -lh /home/site/wwwroot/"
-            displayName: "List Web App Files"
+          # - task: AzureCLI@2
+          #   inputs:
+          #     azureSubscription: $(azureServiceConnectionId)
+          #     scriptType: 'bash'
+          #     scriptLocation: 'inlineScript'
+          #     inlineScript: |
+          #       az webapp ssh --name $(webAppName) --resource-group $(webAppResourceGroupName) --command "ls -lh /home/site/wwwroot/"
+          #   displayName: "List Web App Files"
 

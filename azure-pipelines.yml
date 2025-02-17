@@ -11,7 +11,10 @@ variables:
   azureServiceConnectionId: 'b5100760-8405-4746-a174-00532da7e564'
 
   # Web app name
-  webAppName: 'truerestweb'
+  webAppName: 'restweb'
+
+  # Web app resource group name
+  webAppResourceGroupName: 'restweb_group'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -103,13 +106,13 @@ stages:
               scriptType: 'bash'
               scriptLocation: 'inlineScript'
               inlineScript: |
-                az webapp log tail --name $(webAppName) --resource-group truerestweb_group
+                az webapp log tail --name $(webAppName) --resource-group $(webAppResourceGroupName)
             displayName: "Tail Web App Logs"
 
           - script: |
               # Wait for the app to be ready before attempting SSH connection
               sleep 60  # Wait for 1 minute
-              az webapp ssh --name $(webAppName) --resource-group truerestweb_group
+              az webapp ssh --name $(webAppName) --resource-group $(webAppResourceGroupName)
             displayName: "Wait for App to Start and SSH"
 
           # Debug: SSH into Web App and list files
@@ -119,7 +122,7 @@ stages:
               scriptType: 'bash'
               scriptLocation: 'inlineScript'
               inlineScript: |
-                az webapp ssh --name $(webAppName) --resource-group truerestweb_group
+                az webapp ssh --name $(webAppName) --resource-group $(webAppResourceGroupName)
             displayName: "SSH into Azure Web App"
             
           # Verify unzipped files inside Web App
@@ -129,6 +132,6 @@ stages:
               scriptType: 'bash'
               scriptLocation: 'inlineScript'
               inlineScript: |
-                az webapp ssh --name $(webAppName) --resource-group truerestweb_group --command "ls -lh /home/site/wwwroot/"
+                az webapp ssh --name $(webAppName) --resource-group $(webAppResourceGroupName) --command "ls -lh /home/site/wwwroot/"
             displayName: "List Web App Files"
 

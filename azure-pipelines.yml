@@ -103,13 +103,13 @@ stages:
               scriptType: 'bash'
               scriptLocation: 'inlineScript'
               inlineScript: |
-                az webapp log tail --name $(webAppName) --resource-group YOUR_RESOURCE_GROUP_NAME
+                az webapp log tail --name $(webAppName) --resource-group fastapi_group-ab84
             displayName: "Tail Web App Logs"
 
           - script: |
               # Wait for the app to be ready before attempting SSH connection
               sleep 60  # Wait for 1 minute
-              az webapp ssh --name $(webAppName) --resource-group YOUR_RESOURCE_GROUP_NAME
+              az webapp ssh --name $(webAppName) --resource-group fastapi_group-ab84
             displayName: "Wait for App to Start and SSH"
 
           # Debug: SSH into Web App and list files

@@ -37,15 +37,14 @@ stages:
         versionSpec: '$(pythonVersion)'
       displayName: 'Use Python $(pythonVersion)'
 
-    - script: |
-        python -m venv antenv
-        source antenv/bin/activate
-        python -m pip install --upgrade pip
-        pip install setup
-        pip install -r requirements.txt
-        ls
-      workingDirectory: $(projectRoot)
-      displayName: "Install requirements"
+    # - script: |
+# python -m venv antenv
+# source antenv/bin/activate
+# python -m pip install --upgrade pip
+# pip install setup
+# pip install -r requirements.txt
+      # workingDirectory: $(projectRoot)
+      # displayName: "Install requirements"
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'
@@ -85,7 +84,7 @@ stages:
               FILE=$(ls $(Pipeline.Workspace)/drop/*.zip)
               echo "Found ZIP file: $FILE"
               unzip -l "$FILE"
-            displayName: "Fix: Install unzip and List ZIP Content"
+            displayName: "Install unzip and List ZIP Content"
 
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App : '
@@ -95,13 +94,15 @@ stages:
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
 
           - script: |
-              ls -l /home/site/wwwroot
+              ls 
+            displayName: "after deploy web ls current folder content"
 
           # Install Python Virtual Environment
           - script: |
               python -m venv antenv
               source antenv/bin/activate
               python -m pip install --upgrade pip
+              pip install setup
               pip install -r requirements.txt
             displayName: 'Setup Virtual Environment'
 

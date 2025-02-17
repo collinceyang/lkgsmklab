@@ -10,8 +10,8 @@ variables:
   # Azure Resource Manager connection created during pipeline creation
   azureServiceConnectionId: 'b5100760-8405-4746-a174-00532da7e564'
 
-  # Web app name fastapi
-  webAppName: 'fastapi'
+  # Web app name truerest
+  webAppName: 'truerest'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -119,7 +119,7 @@ stages:
               scriptType: 'bash'
               scriptLocation: 'inlineScript'
               inlineScript: |
-                az webapp ssh --name $(webAppName) --resource-group fastapi_group-ab84
+                az webapp ssh --name $(webAppName) --resource-group truerest_group-ab84
             displayName: "SSH into Azure Web App"
             
           # Verify unzipped files inside Web App

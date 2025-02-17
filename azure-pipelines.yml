@@ -37,14 +37,14 @@ stages:
         versionSpec: '$(pythonVersion)'
       displayName: 'Use Python $(pythonVersion)'
 
-    # - script: |
-# python -m venv antenv
-# source antenv/bin/activate
-# python -m pip install --upgrade pip
-# pip install setup
-# pip install -r requirements.txt
-      # workingDirectory: $(projectRoot)
-      # displayName: "Install requirements"
+    - script: |
+        python -m venv antenv
+        source antenv/bin/activate
+        python -m pip install --upgrade pip
+        pip install setup
+        pip install -r requirements.txt
+        workingDirectory: $(projectRoot)
+        displayName: "Install requirements"
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'
@@ -97,18 +97,23 @@ stages:
               ls 
             displayName: "after deploy web ls current folder content"
 
-          # Install Python Virtual Environment
-          - script: |
-              python -m venv antenv
-              source antenv/bin/activate
-              python -m pip install --upgrade pip
-              pip install setup
-              pip install -r requirements.txt
-            displayName: 'Setup Virtual Environment'
+          # Debug: SSH into Web App and list files
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: $(azureServiceConnectionId)
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az webapp ssh --name $(webAppName) --resource-group YOUR_RESOURCE_GROUP_NAME
+            displayName: "SSH into Azure Web App"
+            
+          # Verify unzipped files inside Web App
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: $(azureServiceConnectionId)
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az webapp ssh --name $(webAppName) --resource-group YOUR_RESOURCE_GROUP_NAME --command "ls -lh /home/site/wwwroot/"
+            displayName: "List Web App Files"
 
-          # Run Uvicorn after deployment
-          - script: |
-              source antenv/bin/activate
-              uvicorn app:app --host 0.0.0.0 --port 80 --workers 4
-            workingDirectory: $(projectRoot)
-            displayName: "Start Uvicorn Server"

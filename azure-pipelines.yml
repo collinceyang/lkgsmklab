@@ -88,7 +88,7 @@ stages:
 
           # Run Uvicorn after deployment
           - script: |
-              chmod +x ./bin/uvicorn
-              ./bin/uvicorn app:app --host 0.0.0.0 --port 80 --workers 4
+              source antenv/bin/activate
+              uvicorn app:app --host 0.0.0.0 --port 80 --workers 4
             workingDirectory: $(projectRoot)
             displayName: "Start Uvicorn Server"

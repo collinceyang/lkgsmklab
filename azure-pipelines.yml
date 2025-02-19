@@ -96,7 +96,14 @@ stages:
               appName: $(webAppName)
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
 
-
+          - task: AzureCLI@2
+            displayName: 'Start Azure Web App'
+            inputs:
+              azureSubscription: $(azureServiceConnectionId)
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az webapp start --name $(webAppName) --resource-group $(webAppResourceGroupName)
 
           # - task: AzureCLI@2
           #   inputs:

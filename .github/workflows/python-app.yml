@@ -39,7 +39,7 @@ jobs:
     - name: Run REST API Server
       run: |
         python --version
-        uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4
+        uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4&
         curl http://localhost:8000/list_sut
 
       # - name: Test with pytest

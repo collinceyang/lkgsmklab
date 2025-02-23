@@ -40,6 +40,9 @@ jobs:
       run: |
         python --version
         uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4&
+        sudo netstat -tulnp | grep 8000
+        curl http://localhost:8000/get_hostname
+        curl http://localhost:8000/get_ror
         curl http://localhost:8000/list_sut
 
       # - name: Test with pytest

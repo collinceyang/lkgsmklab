@@ -45,6 +45,11 @@ jobs:
         curl http://localhost:8000/get_hostname
         curl http://localhost:8000/get_ror
         curl http://localhost:8000/list_sut
+    - name: Test REST API
+      run: |
+        python --version
+        python ./tests/test_fastapi.py
+
 
       # - name: Test with pytest
     #   run: |

@@ -17,7 +17,7 @@ permissions:
   contents: read
 
 jobs:
-  build-lint-test:
+  build-lint-test-mongodb:
 
     runs-on: ubuntu-latest
 

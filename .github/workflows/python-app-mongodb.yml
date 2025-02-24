@@ -72,5 +72,6 @@ jobs:
       run: |
         python --version
         python ./tests-mongodb/test_fastapi_setror_mongodb.py
+        python ./tests-mongodb/test_fastapi_query_mongodb.py mongo_ror_collection
 
         

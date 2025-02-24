@@ -68,5 +68,9 @@ jobs:
         sudo systemctl enable mongod
         sudo systemctl status mongod
         mongod --version
+    - name: Test REST API with MongoDB
+      run: |
+        python --version
+        python ./tests-mongodb/test_fastapi_setror_mongodb.py
 
         

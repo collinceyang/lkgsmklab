@@ -54,9 +54,17 @@ jobs:
         python --version
         python ./tests/test_fastapi_setror.py
 
-
     - name: Install MongoDB to Ubuntu Linux
       continue-on-error: true
       run: |
         lsb_release -cs
         curl -fsSL https://pgp.mongodb.com/server-7.0.asc | sudo gpg --dearmor -o /usr/share/keyrings/mongodb-server-7.0.gpg
+        echo "deb [signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+        sudo apt -y update
+        sudo apt install -y mongodb-org
+        sudo systemctl start mongod
+        sudo systemctl enable mongod
+        sudo systemctl status mongod
+        mongod --version
+
+        

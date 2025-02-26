@@ -6,11 +6,11 @@ from requests.auth import HTTPBasicAuth
 timestamp1 =time.strftime("%Y%m%d%H%M%S", time.localtime())
 print(timestamp1)
 
-timestamp2 = int(timestamp1) + 1    
-print(timestamp2)
+int_timestamp2 = int(timestamp1) + 1    
+print(int_timestamp2)
 
 amdgpuid = timestamp1
-rocmid = str(timestamp2)
+rocmid = str(int_timestamp2)
 
 set_endpoint =  "set_ror"
 url = f"http://localhost:8000/{set_endpoint}/{amdgpuid}_{rocmid}"

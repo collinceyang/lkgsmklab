@@ -64,6 +64,7 @@ def get_set_ror_api(timestamp1):
 # Basic test case
 @pytest.mark.api    
 def test_get_hostname():
+    print(f"{conftest.api_base_url}/get_hostname")
     assert get_rest_api_response("get_hostname") == True
 
 @pytest.mark.api 

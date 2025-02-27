@@ -7,7 +7,7 @@ from requests.auth import HTTPBasicAuth
 
 # function to get rest api response
 def get_rest_api_response(end_point):
-    url = f"http://localhost:8000/{end_point}"
+    url = f"{api_base_url}/{end_point}"
     response = requests.get(url)
     if response.status_code == 200:
         json_str = json.dumps(response.json(), indent=4)
@@ -25,7 +25,7 @@ def set_ror_api(timestamp1):
     amdgpuid = timestamp1
     rocmid = str(timestamp2)
     set_endpoint =  "set_ror"
-    url = f"http://localhost:8000/{set_endpoint}/{amdgpuid}_{rocmid}"
+    url = f"{api_base_url}/{set_endpoint}/{amdgpuid}_{rocmid}"
     # print(url)
     # response = requests.post(url)
     response = requests.put(url)
@@ -45,7 +45,7 @@ def get_set_ror_api(timestamp1):
     rocmid = str(timestamp2)
     get_endpoint =  "get_ror"
     set_ror_api(timestamp1) 
-    url = f"http://localhost:8000/{get_endpoint}"
+    url = f"{api_base_url}/{get_endpoint}"
     response = requests.get(url)
     if response.status_code == 200:
         # json_str = json.dumps(response.json(), indent=4)
@@ -60,23 +60,29 @@ def get_set_ror_api(timestamp1):
 
 
 
-# Basic test case    
+# Basic test case
+@pytest.mark.api    
 def test_get_hostname():
     assert get_rest_api_response("get_hostname") == True
 
+@pytest.mark.api 
 def test_list_sut():
     assert get_rest_api_response("list_sut") == True
 
+@pytest.mark.api
 def test_list_sku():
     assert get_rest_api_response("list_sku") == True
 
+@pytest.mark.api 
 def test_get_ror():
     assert get_rest_api_response("get_ror") == True
 
+@pytest.mark.api 
 def test_set_ror():
     timestamp1 =time.strftime("%Y%m%d%H%M%S", time.localtime())
     assert set_ror_api(timestamp1) == True
 
+@pytest.mark.api 
 def test_get_set_ror():
     timestamp1 =time.strftime("%Y%m%d%H%M%S", time.localtime())
     assert get_set_ror_api(timestamp1) == True

@@ -3,6 +3,7 @@ import pytest
 import time
 import requests
 from requests.auth import HTTPBasicAuth
+import conftest
 
 
 # function to get rest api response

@@ -62,9 +62,16 @@ def get_set_ror_api(base_url, timestamp1):
 
 
 # Basic test case
+@pytest.mark.smoke   
+def test_request_timeout(request_timeout):
+    assert print(f"Request Timeout = {request_timeout} sec") == True
+
+@pytest.mark.smoke   
+def test_user_password(env_username, env_password):
+    assert print(f"Current User = {env_username} /Password = {env_password}") == True
+
 @pytest.mark.api    
 def test_get_hostname(api_base_url):
-    
     assert get_rest_api_response(api_base_url,"get_hostname") == True
 
 @pytest.mark.api 

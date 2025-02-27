@@ -19,6 +19,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      ENV_TYPE: "dev"
+
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.10
@@ -66,3 +69,7 @@ jobs:
       run: |
         pytest --version
         pytest -m xfail
+    - name: Test with pytest - smoke
+      run: |
+        pytest --version
+        pytest -m smoke

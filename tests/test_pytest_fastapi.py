@@ -39,11 +39,12 @@ def set_ror_api(timestamp1):
         return False
 
 # function to get rest api response
-def get_set_ror_api(timestamp1):    
+def get_set_ror_api(timestamp1):
     timestamp2 = int(timestamp1) + 1    
     amdgpuid = timestamp1
     rocmid = str(timestamp2)
     get_endpoint =  "get_ror"
+    set_ror_api(timestamp1) 
     url = f"http://localhost:8000/{get_endpoint}"
     response = requests.get(url)
     if response.status_code == 200:

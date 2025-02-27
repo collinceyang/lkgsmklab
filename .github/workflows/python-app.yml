@@ -72,4 +72,4 @@ jobs:
     - name: Test with pytest - smoke
       run: |
         pytest --version
-        pytest -m smoke
+        pytest -s -m smoke

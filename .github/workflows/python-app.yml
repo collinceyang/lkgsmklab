@@ -54,7 +54,15 @@ jobs:
         python --version
         python ./tests-requests/test_fastapi_setror.py
 
-    - name: Test with pytest
+    - name: Test with pytest all
       run: |
         pytest --version
-        cd tests && pytest
+        pytest
+    - name: Test with pytest - api
+      run: |
+        pytest --version
+        pytest -m api
+    - name: Test with pytest - xfail    
+      run: |
+        pytest --version
+        pytest -m xfail

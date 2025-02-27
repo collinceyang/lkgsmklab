@@ -3,5 +3,6 @@ jinja2
 uvicorn
 requests
 pymongo
+python-dotenv
 urllib3<2
 

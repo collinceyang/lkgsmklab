@@ -62,9 +62,25 @@ def get_set_ror_api(base_url, timestamp1):
 
 
 # Basic test case
+@pytest.mark.smoke
+def test_request_timeout(request_timeout):
+    print(f"Request Timeout = {request_timeout} sec")
+    assert request_timeout is not None, "request_timeout should not be None"
+    assert isinstance(request_timeout, (int, float)), "request_timeout should be a number"
+    assert request_timeout > 0, "request_timeout should be greater than zero"
+
+@pytest.mark.smoke   
+def test_user_password(env_username, env_password):
+    print(f"Current User = {env_username} /Password = {env_password}")
+    assert env_username is not None, "env_username should not be None"
+    assert env_password is not None, "env_password should not be None"
+    assert isinstance(env_username, str), "env_username should be a string"
+    assert isinstance(env_password, str), "env_password should be a string"
+    assert len(env_username) > 0, "env_username should not be empty"
+    assert len(env_password) > 0, "env_password should not be empty"
+
 @pytest.mark.api    
 def test_get_hostname(api_base_url):
-    
     assert get_rest_api_response(api_base_url,"get_hostname") == True
 
 @pytest.mark.api 

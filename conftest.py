@@ -5,8 +5,21 @@
 # •	Fixtures can have different scopes (function, class, module, session).
 
 import pytest
-from utils.config import API_BASE_URL
+from utils.config import API_BASE_URL, USERNAME, PASSWORD, REQUEST_TIMEOUT
+
 
 @pytest.fixture(scope="session")
 def api_base_url():
     return API_BASE_URL # Returns the API base URL
+
+@pytest.fixture(scope="session")
+def env_username():
+    return USERNAME # Returns the API USERNAME
+
+@pytest.fixture(scope="session")
+def env_password():
+    return PASSWORD # Returns the API PASSWORD
+
+@pytest.fixture(scope="session")
+def request_timeout():
+    return REQUEST_TIMEOUT # Returns the API REQUEST_TIMEOUT

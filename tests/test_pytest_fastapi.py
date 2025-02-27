@@ -45,7 +45,7 @@ def get_set_ror_api(base_url, timestamp1):
     amdgpuid = timestamp1
     rocmid = str(timestamp2)
     get_endpoint =  "get_ror"
-    set_ror_api(timestamp1) 
+    set_ror_api(base_url,timestamp1) 
     url = f"{base_url}/{get_endpoint}"
     response = requests.get(url)
     if response.status_code == 200:

@@ -5,10 +5,10 @@ import requests
 from requests.auth import HTTPBasicAuth
 import conftest
 
-
+base_url = conftest.api_base_url()
 # function to get rest api response
 def get_rest_api_response(end_point):
-    url = f"{conftest.api_base_url}/{end_point}"
+    url = f"{base_url}/{end_point}"
     response = requests.get(url)
     if response.status_code == 200:
         json_str = json.dumps(response.json(), indent=4)
@@ -26,7 +26,7 @@ def set_ror_api(timestamp1):
     amdgpuid = timestamp1
     rocmid = str(timestamp2)
     set_endpoint =  "set_ror"
-    url = f"{conftest.api_base_url}/{set_endpoint}/{amdgpuid}_{rocmid}"
+    url = f"{base_url}/{set_endpoint}/{amdgpuid}_{rocmid}"
     # print(url)
     # response = requests.post(url)
     response = requests.put(url)
@@ -46,7 +46,7 @@ def get_set_ror_api(timestamp1):
     rocmid = str(timestamp2)
     get_endpoint =  "get_ror"
     set_ror_api(timestamp1) 
-    url = f"{conftest.api_base_url}/{get_endpoint}"
+    url = f"{base_url}/{get_endpoint}"
     response = requests.get(url)
     if response.status_code == 200:
         # json_str = json.dumps(response.json(), indent=4)
@@ -64,7 +64,7 @@ def get_set_ror_api(timestamp1):
 # Basic test case
 @pytest.mark.api    
 def test_get_hostname():
-    print(f"{conftest.api_base_url}/get_hostname")
+    
     assert get_rest_api_response("get_hostname") == True
 
 @pytest.mark.api 

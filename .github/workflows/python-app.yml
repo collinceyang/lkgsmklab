@@ -21,14 +21,14 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.10', '3.11', '3.12']
+        env-type: ['dev','qa','prod']
       fail-fast: false
-
     env:
-      ENV_TYPE: "dev"
+      ENV_TYPE: ${{ matrix.env-type }}
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python ${{ matrix.python-version }} in ${{ matrix.env-type }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}

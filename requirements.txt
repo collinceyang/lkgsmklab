@@ -4,5 +4,6 @@ uvicorn
 requests
 pymongo
 python-dotenv
+flake8
 urllib3<2
 

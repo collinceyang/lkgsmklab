@@ -4,7 +4,18 @@ import time
 import requests
 from requests.auth import HTTPBasicAuth
 
-
+# function to get rest api response with authentication
+def get_rest_api_auth_response( base_url, end_point, headers ):
+    url = f"{base_url}/{end_point}"
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        json_str = json.dumps(response.json(), indent=4)
+        print(f"response {url}:")
+        print(json_str)
+        return True
+    else:
+        print("Error:", response.status_code, response.text)
+        return False
 
 # function to get rest api response
 def get_rest_api_response( base_url, end_point ):
@@ -78,6 +89,18 @@ def test_user_password(env_username, env_password):
     assert isinstance(env_password, str), "env_password should be a string"
     assert len(env_username) > 0, "env_username should not be empty"
     assert len(env_password) > 0, "env_password should not be empty"
+
+@pytest.mark.authapi
+def test_api_auth_apikey_list_sut(api_base_url, request_api_headers):
+    assert get_rest_api_auth_response(api_base_url,"v3/list_sut",request_api_headers) == True
+
+@pytest.mark.authapi
+def test_api_auth_token_list_sut(api_base_url, request_token_headers):
+    assert get_rest_api_auth_response(api_base_url,"v2/list_sut",request_token_headers) == True
+
+@pytest.mark.authapi
+def test_api_no_auth_list_sut(api_base_url, request_default_headers):
+    assert get_rest_api_auth_response(api_base_url,"list_sut",request_default_headers) == True
 
 @pytest.mark.api    
 def test_get_hostname(api_base_url):

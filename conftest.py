@@ -5,7 +5,7 @@
 # •	Fixtures can have different scopes (function, class, module, session).
 
 import pytest
-from utils.config import API_BASE_URL, USERNAME, PASSWORD, REQUEST_TIMEOUT
+from utils.config import API_BASE_URL, USERNAME, PASSWORD, REQUEST_TIMEOUT, DEFAULT_HEADERS, API_HEADERS, TOKEN_HEADERS
 
 
 @pytest.fixture(scope="session")
@@ -22,4 +22,16 @@ def env_password():
 
 @pytest.fixture(scope="session")
 def request_timeout():
-    return REQUEST_TIMEOUT # Returns the API REQUEST_TIMEOUT
+    return REQUEST_TIMEOUT # Returns the API
+
+@pytest.fixture(scope="session")
+def request_default_headers():
+    return DEFAULT_HEADERS # Returns default token auth headers 
+
+@pytest.fixture(scope="session")
+def request_api_headers():
+    return API_HEADERS # Returns api key auth headers
+
+@pytest.fixture(scope="session")
+def request_token_headers():
+    return TOKEN_HEADERS # Returns oauth token auth headers

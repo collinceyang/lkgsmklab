@@ -4,10 +4,48 @@ import socket
 import time
 from datetime import datetime, timezone
 from typing import Dict
+from typing import Optional
 import requests
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from fastapi import FastAPI, Request, HTTPException, Depends, Security
+from fastapi.security.api_key import APIKeyHeader
+from fastapi.security import  OAuth2PasswordBearer
+
+# Define API key authentication
+API_KEY = "my_secure_api_key"  # Store securely (e.g., environment variable)
+API_KEY_NAME = "X-API-Key"
+###
+api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
+def get_api_key(api_key: str = Depends(api_key_header)):
+    """Validate API Key"""
+    if api_key != API_KEY:
+        raise HTTPException(status_code=401, detail="Invalid API Key")
+    return api_key
+
+# Define OAuth2  authentication
+VALID_BEARER_TOKENS = ["valid_oauth_token_example"]  # Store and validate in DB or token service
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")  # OAuth2 Bearer Token
+
+# Authentication function that allows either API Key or Bearer Token
+def authenticate(
+    api_key: Optional[str] = Security(api_key_header),
+    token: Optional[str] = Security(oauth2_scheme)
+):
+    print(f"Received API Key: {api_key}")  # Debugging
+    print(f"Received Token: {token}")      # Debugging
+    if api_key:
+        print(f"API Key Provided: {api_key}")
+    if token:
+        print(f"Bearer Token Provided: {token}")
+    if api_key == API_KEY:
+        return {"auth_method": "API Key", "user": "api_user"}
+    elif token in VALID_BEARER_TOKENS:
+        return {"auth_method": "OAuth2 Bearer", "user": "oauth_user"}
+    else:
+        raise HTTPException(status_code=401, detail="Invalid authentication credentials")
+
 
 
 # Load JSON data for navi lab
@@ -35,6 +73,19 @@ expected_postcode = "200,201,202,203"
 ####
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
+
+# V3 (API Key Authentication Required)
+@app.get("/v3/list_sut", dependencies=[Depends(get_api_key)])
+async def get_sut_list_v3():
+    sut_list = [each["sut_name"] for each in data_lab]
+    return {"auth_info": "api-key" ,"sut_list": sut_list, "from_host": socket.gethostname(), "version": "v3 (api key Authenticated)"}
+
+# V2 (OAuth Key Token Authentication Required)
+@app.get("/v2/list_sut")
+def get_sut_list(auth_info: dict = Depends(authenticate)):
+    sut_list = [each["sut_name"] for each in data_lab]
+    return { "auth_info": auth_info,"sut_list": sut_list, "from_host": socket.gethostname(), "version": "v2 (token Authenticated)"}
+
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):

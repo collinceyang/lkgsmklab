@@ -77,3 +77,7 @@ jobs:
       run: |
         pytest --version
         pytest -s -m smoke
+    - name: Test with pytest - auth api
+      run: |
+        pytest --version
+        pytest -s -m authapi

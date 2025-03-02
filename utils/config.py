@@ -38,3 +38,15 @@ DEFAULT_HEADERS = {
     "Content-Type": "application/json",
     "Accept": "application/json"
 }
+
+API_HEADERS = {
+    "X-API-Key": "my_secure_api_key",
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+}
+
+TOKEN_HEADERS = {
+    "Authorization": "Bearer valid_oauth_token_example",
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+}

@@ -97,21 +97,24 @@ def get_set_ror_api(base_url, timestamp1):
     amdgpuid = timestamp1
     rocmid = str(timestamp2)
     get_endpoint =  "get_ror"
-    set_ror_api(base_url,timestamp1) 
-    url = f"{base_url}/{get_endpoint}"
-    response = requests.get(url)
-    if response.status_code == 200:
-        # json_str = json.dumps(response.json(), indent=4)
-        get_amdgpu_build = response.json()["amdgpu_build"]
-        get_rocm_build = response.json()["rocm_build"]
-        if get_amdgpu_build == amdgpuid and  get_rocm_build.split("/")[1] == rocmid:
-            # print("Test set_ror passed")
-            return True
-        else:
-            # print("Test set_ror failed")
-            print(f"{get_amdgpu_build} <> {amdgpuid}")
-            print(f"{get_rocm_build} <> {rocmid}")
-            return False
+    if set_ror_api(base_url,timestamp1):
+        url = f"{base_url}/{get_endpoint}"
+        response = requests.get(url)
+        if response.status_code == 200:
+            # json_str = json.dumps(response.json(), indent=4)
+            get_amdgpu_build = response.json()["amdgpu_build"]
+            get_rocm_build = response.json()["rocm_build"]
+            if get_amdgpu_build == amdgpuid and  get_rocm_build.split("/")[1] == rocmid:
+                # print("Test set_ror passed")
+                return True
+            else:
+                # print("Test set_ror failed")
+                print(f"{get_amdgpu_build} <> {amdgpuid}")
+                print(f"{get_rocm_build} <> {rocmid}")
+                return False
+    else:
+        print(" set_ror_api() failed !!!")
+        return False
 
 
 

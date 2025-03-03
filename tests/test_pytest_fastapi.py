@@ -4,9 +4,7 @@ import time
 import requests
 from requests.auth import HTTPBasicAuth
 
-# get the set ror data from the test data file
-with open('data/set_ror_data.json', 'r') as json_file:
-    set_ror_data = json.load(json_file)
+
 
 
 # function to get rest api response with authentication
@@ -172,7 +170,7 @@ def test_get_set_ror(api_base_url):
 @pytest.mark.datadriven
 def test_set_ror_jsondata(api_base_url, set_ror_data):
     assert set_ror_api_jsondata(api_base_url,set_ror_data) == True
-    
+
 @pytest.mark.datadriven
 def test_get_ror_jsondata(api_base_url, set_ror_data):
     assert get_ror_api_jsondata(api_base_url,set_ror_data) == True

@@ -65,15 +65,15 @@ jobs:
     - name: Install k6
       run: |
         sudo apt update
-        sudo apt install k6 -y
+        sudo snap install k6
   
     - name: Run k6 Test
       run: |
-        k6 run tests-k6/test_rest_get.js
+        k6 run --out json=tests-k6/k6-report.json tests-k6/test_rest_get.js
   
     - name: Upload k6 Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: k6-report
-        path: ./k6-report.html
+        path: tests-k6//k6-report.json
 

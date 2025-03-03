@@ -65,8 +65,7 @@ jobs:
     - name: Install k6
       run: |
         sudo apt update
-   
-        sudo snap install k6 -y
+        sudo snap install k6
   
     - name: Run k6 Test
       run: |

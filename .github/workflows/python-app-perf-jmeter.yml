@@ -65,7 +65,11 @@ jobs:
     - name: Install J-meter to Ubuntu Linux
       run: |
         sudo apt update
-        sudo apt install jmeter -y
+        sudo apt install openjdk-11-jdk -y
+        wget https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
+        tar -xvzf apache-jmeter-5.6.3.tgz
+        export PATH=$PATH:/home/runner/work/python-app-perf-jmeter/python-app-perf-jmeter/apache-jmeter-5.6.3/bin
+        java -version
         jmeter --version
   
     - name: Run J-Meter Test

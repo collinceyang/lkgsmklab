@@ -4,6 +4,11 @@ import time
 import requests
 from requests.auth import HTTPBasicAuth
 
+# get the set ror data from the test data file
+with open('data/set_ror_data.json', 'r') as json_file:
+    set_ror_data = json.load(json_file)
+
+
 # function to get rest api response with authentication
 def get_rest_api_auth_response( base_url, end_point, headers ):
     url = f"{base_url}/{end_point}"
@@ -31,6 +36,24 @@ def get_rest_api_response( base_url, end_point ):
         return False
 
 
+# function to set ror rest api with data file 
+def set_ror_api_jsondata( base_url, json_data):  
+    amdgpuid = json_data["amdgpu_build"]
+    rocmid = json_data["rocm_build"]
+    set_endpoint =  "set_ror"
+    url = f"{base_url}/{set_endpoint}/{amdgpuid}_{rocmid}"
+    # print(url)
+    # response = requests.post(url)
+    response = requests.put(url)
+    if response.status_code == 200:
+        # json_str = json.dumps(response.json(), indent=4)
+        # print(f"response {url}:/n")
+        # print(json_str)
+        return True
+    else:
+        print("Error:", response.status_code, response.text)
+        return False
+
 # function to set rest api response
 def set_ror_api( base_url,timestamp1):
     timestamp2 = int(timestamp1) + 1    
@@ -49,6 +72,24 @@ def set_ror_api( base_url,timestamp1):
     else:
         print("Error:", response.status_code, response.text)
         return False
+
+# function to get/set rest api with json data
+def get_ror_api_jsondata(base_url, json_data):
+    amdgpuid = json_data["amdgpu_build"]
+    rocmid = json_data["rocm_build"]
+    get_endpoint =  "get_ror"
+    url = f"{base_url}/{get_endpoint}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        # json_str = json.dumps(response.json(), indent=4)
+        get_amdgpu_build = response.json()["amdgpu_build"]
+        get_rocm_build = response.json()["rocm_build"]
+        if get_amdgpu_build == amdgpuid and get_rocm_build.split("/")[1] == rocmid:
+            # print("Test set_ror passed")
+            return True
+        else:
+            # print("Test set_ror failed")
+            return False
 
 # function to get rest api response
 def get_set_ror_api(base_url, timestamp1):
@@ -127,6 +168,15 @@ def test_set_ror(api_base_url):
 def test_get_set_ror(api_base_url):
     timestamp1 =time.strftime("%Y%m%d%H%M%S", time.localtime())
     assert get_set_ror_api(api_base_url,timestamp1) == True
+
+@pytest.mark.datadriven
+def test_set_ror_jsondata(api_base_url, set_ror_data):
+    assert set_ror_api_jsondata(api_base_url,set_ror_data) == True
+    
+@pytest.mark.datadriven
+def test_get_ror_jsondata(api_base_url, set_ror_data):
+    assert get_ror_api_jsondata(api_base_url,set_ror_data) == True
+
 
 # def test_get_set_ror_fail():
 #     time.sleep(3)

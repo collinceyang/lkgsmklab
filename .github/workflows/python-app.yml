@@ -76,6 +76,10 @@ jobs:
       run: |
         pytest --version
         pytest -s -m authapi
+    - name: Test with pytest - datadriven
+      run: |
+        pytest --version
+        pytest -s -m datadriven
     - name: Test with pytest all
       run: |
         pytest --version

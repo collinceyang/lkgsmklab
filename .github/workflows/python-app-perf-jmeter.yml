@@ -1,0 +1,80 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: REST API Performance Test - J-Meter
+
+on:
+  # push:
+  #   branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+    
+
+permissions:
+  contents: read
+
+jobs:
+  build-lint-test:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.10'] # , '3.11', '3.12']
+        env-type: ['dev'] #,'qa','prod']
+      fail-fast: false
+    env:
+      ENV_TYPE: ${{ matrix.env-type }}
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }} in ${{ matrix.env-type }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Run REST API Server
+      run: |
+        python --version
+        uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4 &
+        sleep 5
+        sudo netstat -tulnp | grep 8000
+        curl http://localhost:8000/get_hostname
+        curl http://localhost:8000/get_ror
+        curl http://localhost:8000/list_sut
+      
+    - name: Test REST API GET by requests
+      run: |
+        python --version
+        python ./tests-requests/test_fastapi.py
+    - name: Test REST API SET-GET by requests
+      run: |
+        python --version
+        python ./tests-requests/test_fastapi_setror.py
+      continue-on-error: true
+    - name: Install J-meter to Ubuntu Linux
+      run: |
+        sudo apt update
+        sudo apt install jmeter -y
+        jmeter --version
+  
+    - name: Run J-Meter Test
+      run: |
+#  k6 run --out json=tests-k6/k6-report.json tests-k6/test_rest_get.js
+  
+    - name: Upload J-Meter Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: jmeter-report
+        path: tests-jmeter//k6-report.json
+

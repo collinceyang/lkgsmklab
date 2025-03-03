@@ -69,14 +69,13 @@ jobs:
         wget https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
         tar -xvzf apache-jmeter-5.6.3.tgz
         export PATH=$PATH:/home/runner/work/python-app-perf-jmeter/python-app-perf-jmeter/apache-jmeter-5.6.3/bin
-        java -version
-        pwd
-        ls
-        
   
     - name: Run J-Meter Test
       run: |
-        jmeter -n -t tests-jmeter/test_get_sut.jmx -l tests-jmeter/test_results.jtl
+        pwd
+        java -version
+        ./apache-jmeter-5.6.3/bin/jmeter --version
+        ./apache-jmeter-5.6.3/bin/jmeter -n -t tests-jmeter/test_get_sut.jmx -l tests-jmeter/test_results.jtl
   
     - name: Upload J-Meter Artifacts
       uses: actions/upload-artifact@v4

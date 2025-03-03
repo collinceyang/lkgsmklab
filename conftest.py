@@ -3,10 +3,15 @@
 # A fixture in PyTest is a function that provides setup and teardown functionality for tests.
 # •	Fixtures help initialize test data, set up database connections, create API clients, configure browsers, etc.
 # •	Fixtures can have different scopes (function, class, module, session).
-
+import json
 import pytest
 from utils.config import API_BASE_URL, USERNAME, PASSWORD, REQUEST_TIMEOUT, DEFAULT_HEADERS, API_HEADERS, TOKEN_HEADERS
 
+# Fixture to load the test data
+@pytest.fixture
+def set_ror_data():
+    with open('data/set_ror_data.json', 'r') as json_file:
+        return json.load(json_file)
 
 @pytest.fixture(scope="session")
 def api_base_url():

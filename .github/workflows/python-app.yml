@@ -79,7 +79,7 @@ jobs:
     - name: Test with pytest - datadriven
       run: |
         pytest --version
-        pytest -s -m datadriven
+        pytest -m datadriven
     - name: Test with pytest all
       run: |
         pytest --version

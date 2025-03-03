@@ -87,6 +87,8 @@ def get_ror_api_jsondata(base_url, json_data):
             return True
         else:
             # print("Test set_ror failed")
+            print(f"{get_amdgpu_build} <> {amdgpuid}")
+            print(f"{get_rocm_build} <> {rocmid}")
             return False
 
 # function to get rest api response
@@ -107,6 +109,8 @@ def get_set_ror_api(base_url, timestamp1):
             return True
         else:
             # print("Test set_ror failed")
+            print(f"{get_amdgpu_build} <> {amdgpuid}")
+            print(f"{get_rocm_build} <> {rocmid}")
             return False
 
 

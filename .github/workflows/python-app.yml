@@ -60,11 +60,6 @@ jobs:
       run: |
         python --version
         python ./tests-requests/test_fastapi_setror.py
-
-    - name: Test with pytest all
-      run: |
-        pytest --version
-        pytest
     - name: Test with pytest - api
       run: |
         pytest --version
@@ -81,6 +76,10 @@ jobs:
       run: |
         pytest --version
         pytest -s -m authapi
+    - name: Test with pytest all
+      run: |
+        pytest --version
+        pytest      
     - name: Archive Pytest test report
       uses: actions/upload-artifact@v4
       with:

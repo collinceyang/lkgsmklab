@@ -75,5 +75,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: k6-report
-        path: ./k6-report.html
+        path: tests-k6//k6-report.html
 

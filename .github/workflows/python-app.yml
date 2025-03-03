@@ -84,10 +84,10 @@ jobs:
     - name: Archive Pytest test report
       uses: actions/upload-artifact@v4
       with:
-        name: RestAPI-test-report
+        name: RestAPI-test-report-${{ matrix.python-version }}-${{ matrix.env-type }}
         path: report
     - name: Upload Pytest report to GitHub
       uses: actions/upload-artifact@v4
       with:
-        name: Pytest-test-report
+        name: Pytest-test-report--${{ matrix.python-version }}-${{ matrix.env-type }}
         path: report

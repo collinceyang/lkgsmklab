@@ -70,11 +70,11 @@ jobs:
   
     - name: Run J-Meter Test
       run: |
-#  k6 run --out json=tests-k6/k6-report.json tests-k6/test_rest_get.js
+        jmeter -n -t tests-jmeter/test_get_sut.jmx -l tests-jmeter/test_results.jtl -e -o tests-jmeter/report
   
     - name: Upload J-Meter Artifacts
       uses: actions/upload-artifact@v4
       with:
         name: jmeter-report
-        path: tests-jmeter//k6-report.json
+        path: tests-jmeter//test_results.jtl
 

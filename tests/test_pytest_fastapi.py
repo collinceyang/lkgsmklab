@@ -168,11 +168,12 @@ def test_get_ror(api_base_url):
 def test_set_ror(api_base_url):
     timestamp1 =time.strftime("%Y%m%d%H%M%S", time.localtime())
     assert set_ror_api(api_base_url,timestamp1) == True
-
-@pytest.mark.api 
-def test_get_set_ror(api_base_url):
-    timestamp1 =time.strftime("%Y%m%d%H%M%S", time.localtime())
     assert get_set_ror_api(api_base_url,timestamp1) == True
+
+# @pytest.mark.api 
+# def test_get_set_ror(api_base_url):
+#     timestamp1 =time.strftime("%Y%m%d%H%M%S", time.localtime())
+#     assert get_set_ror_api(api_base_url,timestamp1) == True
 
 @pytest.mark.datadriven
 def test_set_ror_jsondata(api_base_url, set_ror_data):

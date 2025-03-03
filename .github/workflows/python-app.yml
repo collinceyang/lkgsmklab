@@ -66,32 +66,32 @@ jobs:
       run: |
         pytest --version
         pytest -m api
-      continue-on-error: true
+      # continue-on-error: true
     - name: Test with pytest - xfail    
       run: |
         pytest --version
         pytest -m xfail
-      continue-on-error: true
+      # continue-on-error: true
     - name: Test with pytest - smoke
       run: |
         pytest --version
         pytest -s -m smoke
-      continue-on-error: true
+      # continue-on-error: true
     - name: Test with pytest - auth api
       run: |
         pytest --version
         pytest -s -m authapi
-      continue-on-error: true
+      # continue-on-error: true
     - name: Test with pytest - datadriven
       run: |
         pytest --version
         pytest -m datadriven
-      continue-on-error: true
+      # continue-on-error: true
     - name: Test with pytest all
       run: |
         pytest --version
         pytest
-      continue-on-error: true      
+      # continue-on-error: true      
     - name: Archive Pytest test report
       uses: actions/upload-artifact@v4
       with:

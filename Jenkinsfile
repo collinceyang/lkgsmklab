@@ -22,7 +22,7 @@ pipeline {
             }
         }
 
-        stage('Setup Python and Install Requirements') {
+        stage('Setup Python and Install Requirements Run REST API Web') {
             steps {
                     script {
                                 // Install Python dependencies
@@ -30,7 +30,7 @@ pipeline {
                                     pwd
                                     ls
                                     python3 -m venv /var/snap/jenkins/4817/workspace/test-multi-branch-pipeline_main
-                                    bash -c 'source /var/snap/jenkins/4817/workspace/test-multi-branch-pipeline_main/bin/activate && cd lkgsmklab && python3 -m pip install -r requirements.txt && python3 --version && uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4 &'
+                                    bash -c 'source /var/snap/jenkins/4817/workspace/test-multi-branch-pipeline_main/bin/activate && python3 -m pip install -r requirements.txt && python3 --version && uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4 &'
                                 """
                             }
                     }
@@ -40,9 +40,19 @@ pipeline {
             steps {
                 echo "Running tests for commit ${COMMIT_ID}"
                 sh 'uname' // Replace with your test command
+                sh  """
+                    echo "Waiting for the server to start..."
+                    sleep 10
+                    echo "Checking if the server is running..."
+                    netstat -tulnp | grep 8000 || (echo "Server is not running!" && exit 1)
+                    curl http://localhost:8000/get_hostname || (echo "Failed to reach API!" && exit 1)
+                    curl http://localhost:8000/get_ror
+                    curl http://localhost:8000/list_sut
+                    """
             }
         }
 
+    
         stage('Code Linting') {
             steps {
                 echo "Checking code quality for commit ${COMMIT_ID}"

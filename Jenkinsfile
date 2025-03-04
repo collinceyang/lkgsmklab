@@ -50,7 +50,7 @@ pipeline {
                                     ls
                                     python3 -m venv ${env.WORKSPACE}
                                     chmod +x  ${env.WORKSPACE}/bin/activate
-                                    ${env.WORKSPACE}/bin/activate && python3 -m pip install -r requirements.txt && python3 --version && uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4&
+                                    source ${env.WORKSPACE}/bin/activate && python3 -m pip install -r requirements.txt && python3 --version && uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4&
                                 """
                             }
                     }

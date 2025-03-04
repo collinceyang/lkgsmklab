@@ -49,13 +49,13 @@ pipeline {
                                     pwd
                                     ls
                                     python3 -m venv ${env.WORKSPACE}
-                                    source ${env.WORKSPACE}/bin/activate && python3 -m pip install -r requirements.txt && python3 --version && uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4&
+                                    ${env.WORKSPACE}/bin/activate && python3 -m pip install -r requirements.txt && python3 --version && uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4&
                                 """
                             }
                     }
         }
 
-        stage('Test') {
+        stage('Test - Curl API') {
             steps {
                 echo "Running tests for commit ${COMMIT_ID}"
                 sh 'uname' // Replace with your test command
@@ -68,6 +68,15 @@ pipeline {
                     curl http://localhost:8000/get_ror
                     curl http://localhost:8000/list_sut
                     """
+            }
+        }
+
+        stage('Test - PyTest') {
+            steps {
+                echo "Running tests for commit ${COMMIT_ID}"
+                sh """
+                    bash -c '${env.WORKSPACE}/bin/activate && pytest'
+                   """
             }
         }
 

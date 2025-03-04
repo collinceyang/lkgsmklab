@@ -6,6 +6,23 @@ pipeline {
     }
 
     stages {
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()  // Deletes previous workspace files
+                script {
+                    echo "Workspace cleaned successfully."
+                }
+            }
+        }
+
+        stage('Get Current Path') {
+            steps {
+                script {
+                    def workspacePath = env.WORKSPACE  // Get Jenkins workspace path
+                    echo "Current workspace path: ${workspacePath}"
+                }
+            }
+        }
         stage('Checkout') {
             steps {
                 script {
@@ -17,6 +34,7 @@ pipeline {
 
         stage('Build') {
             steps {
+                echo "Building the project in: ${env.WORKSPACE}"
                 echo "Building commit ${COMMIT_ID}"
                 sh 'lsb_release -a' // Replace with your build command
             }
@@ -27,10 +45,11 @@ pipeline {
                     script {
                                 // Install Python dependencies
                                 sh """
+                                    #!/bin/bash
                                     pwd
                                     ls
-                                    python3 -m venv /var/snap/jenkins/4817/workspace/test-multi-branch-pipeline_main
-                                    source /var/snap/jenkins/4817/workspace/test-multi-branch-pipeline_main/bin/activate && python3 -m pip install -r requirements.txt && python3 --version && uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4&
+                                    python3 -m venv ${env.WORKSPACE}
+                                    source ${env.WORKSPACE}/bin/activate && python3 -m pip install -r requirements.txt && python3 --version && uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4&
                                 """
                             }
                     }

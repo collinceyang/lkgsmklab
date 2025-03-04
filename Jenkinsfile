@@ -28,8 +28,9 @@ pipeline {
                                 // Install Python dependencies
                                 sh """
                                     pwd
-                                    python3 -m venv /var/snap/jenkins/4817/workspace/test-multi-branch-pipeline_main/lkgsmklab
-                                    bash -c 'source /var/snap/jenkins/4817/workspace/test-multi-branch-pipeline_main/lkgsmklab/bin/activate && cd lkgsmklab && python3 -m pip install -r requirements.txt && python3 --version && uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4 &'
+                                    ls
+                                    python3 -m venv /var/snap/jenkins/4817/workspace/test-multi-branch-pipeline_main
+                                    bash -c 'source /var/snap/jenkins/4817/workspace/test-multi-branch-pipeline_main/bin/activate && cd lkgsmklab && python3 -m pip install -r requirements.txt && python3 --version && uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4 &'
                                 """
                             }
                     }

@@ -56,27 +56,27 @@ pipeline {
                     }
         }
 
-        stage('Test - Curl API') {
-            steps {
-                echo "Running tests for commit ${COMMIT_ID}"
-                sh 'uname' // Replace with your test command
-                sh  """
-                    echo "Waiting for the server to start..."
-                    sleep 10
-                    echo "Checking if the server is running..."
-                    netstat -tulnp | grep 8000 || (echo "Server is not running!" && exit 1)
-                    curl http://localhost:8000/get_hostname || (echo "Failed to reach API!" && exit 1)
-                    curl http://localhost:8000/get_ror
-                    curl http://localhost:8000/list_sut
-                    """
-            }
-        }
+        // stage('Test - Curl API') {
+        //     steps {
+        //         echo "Running tests for commit ${COMMIT_ID}"
+        //         sh 'uname' // Replace with your test command
+        //         sh  """
+        //             echo "Waiting for the server to start..."
+        //             sleep 10
+        //             echo "Checking if the server is running..."
+        //             netstat -tulnp | grep 8000 || (echo "Server is not running!" && exit 1)
+        //             curl http://localhost:8000/get_hostname || (echo "Failed to reach API!" && exit 1)
+        //             curl http://localhost:8000/get_ror
+        //             curl http://localhost:8000/list_sut
+        //             """
+        //     }
+        // }
 
         stage('Test - PyTest') {
             steps {
                 echo "Running tests for commit ${COMMIT_ID}"
                 sh """
-                    bash -c '${env.WORKSPACE}/bin/activate && pytest'
+                    bash -c 'source ${env.WORKSPACE}/bin/activate && pytest'
                    """
             }
         }

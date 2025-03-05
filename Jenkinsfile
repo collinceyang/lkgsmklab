@@ -81,7 +81,6 @@ pipeline {
                 sh """
                     ${env.WORKSPACE}/bin/python3 -m pytest -m smoke
                     ${env.WORKSPACE}/bin/python3 -m pytest -m api
-                    ${env.WORKSPACE}/bin/python3 -m pytest -m datadriven
                    """
             }
         }

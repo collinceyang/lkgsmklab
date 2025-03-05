@@ -52,7 +52,9 @@ pipeline {
                                     chmod +x  ${env.WORKSPACE}/bin/activate
                                     ${env.WORKSPACE}/bin/pip install -r requirements.txt
                                     ${env.WORKSPACE}/bin/python3 -m pytest --version
-                                    ${env.WORKSPACE}/bin/python3 -m uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4&
+                                    ${env.WORKSPACE}/bin/python3 -m pip list | grep uvicorn
+                                    ${env.WORKSPACE}/bin/python3 -m uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4 &
+                                    ${env.WORKSPACE}/bin/python3 -m pytest
                                 """
                             }
                     }

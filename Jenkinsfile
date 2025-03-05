@@ -92,7 +92,7 @@ pipeline {
         stage('Deploy Preview (Optional)') {
             steps {
                 echo "Deploying preview for commit ${COMMIT_ID} from ${BRANCH_NAME}"
-                curl http://localhost:8000/list_sut
+                sh curl http://localhost:8000/list_sut
                 sh 'ifconfig' // Replace with your preview deployment command
             }
         }

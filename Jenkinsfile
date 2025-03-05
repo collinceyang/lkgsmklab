@@ -50,7 +50,7 @@ pipeline {
                                     ls
                                     python3 -m venv ${env.WORKSPACE}
                                     chmod +x  ${env.WORKSPACE}/bin/activate
-                                    ${env.WORKSPACE}/bin/pip install -r requirements.txt  && ${env.WORKSPACE}/bin/uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4&
+                                    ${env.WORKSPACE}/bin/pip install -r requirements.txt  && ${env.WORKSPACE}/bin/python3 -m uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4&
                                 """
                             }
                     }
@@ -76,7 +76,7 @@ pipeline {
             steps {
                 echo "Running pytest tests for commit ${COMMIT_ID}"
                 sh """
-                    . ${env.WORKSPACE}/bin/pytest 
+                    . ${env.WORKSPACE}/bin/python3 -m pytest 
                    """
             }
         }
@@ -92,6 +92,7 @@ pipeline {
         stage('Deploy Preview (Optional)') {
             steps {
                 echo "Deploying preview for commit ${COMMIT_ID} from ${BRANCH_NAME}"
+                curl http://localhost:8000/list_sut
                 sh 'ifconfig' // Replace with your preview deployment command
             }
         }

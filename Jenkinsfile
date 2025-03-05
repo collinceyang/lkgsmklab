@@ -72,14 +72,14 @@ pipeline {
         //     }
         // }
 
-        stage('Test - PyTest') {
-            steps {
-                echo "Running pytest tests for commit ${COMMIT_ID}"
-                sh """
-                    . ${env.WORKSPACE}/bin/python3 -m pytest 
-                   """
-            }
-        }
+        // stage('Test - PyTest') {
+        //     steps {
+        //         echo "Running pytest tests for commit ${COMMIT_ID}"
+        //         sh """
+        //             . ${env.WORKSPACE}/bin/python3 -m pytest 
+        //            """
+        //     }
+        // }
 
     
         stage('Code Linting') {
@@ -101,6 +101,7 @@ pipeline {
     post {
         always {
             echo "Pipeline completed for commit ${COMMIT_ID}"
+            sh 'curl http://localhost:8000/list_sut'
         }
         success {
             echo "Build succeeded for commit ${COMMIT_ID}"

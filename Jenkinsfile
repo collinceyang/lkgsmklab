@@ -54,37 +54,37 @@ pipeline {
                                     ${env.WORKSPACE}/bin/python3 -m pytest --version
                                     ${env.WORKSPACE}/bin/python3 -m pip list | grep uvicorn
                                     ${env.WORKSPACE}/bin/python3 -m uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4 &
-                                    ${env.WORKSPACE}/bin/python3 -m pytest -m smoke
-                                    ${env.WORKSPACE}/bin/python3 -m pytest -m api
                                 """
                             }
                     }
         }
 
-        // stage('Test - Curl API') {
-        //     steps {
-        //         echo "Running tests for commit ${COMMIT_ID}"
-        //         sh 'uname' // Replace with your test command
-        //         sh  """
-        //             echo "Waiting for the server to start..."
-        //             sleep 10
-        //             echo "Checking if the server is running..."
-        //             netstat -tulnp | grep 8000 || (echo "Server is not running!" && exit 1)
-        //             curl http://localhost:8000/get_hostname || (echo "Failed to reach API!" && exit 1)
-        //             curl http://localhost:8000/get_ror
-        //             curl http://localhost:8000/list_sut
-        //             """
-        //     }
-        // }
+        stage('Test - Curl API') {
+            steps {
+                echo "Running tests for commit ${COMMIT_ID}"
+                sh 'uname' // Replace with your test command
+                sh  """
+                    echo "Waiting for the server to start..."
+                    sleep 10
+                    echo "Checking if the server is running..."
+                    netstat -tulnp | grep 8000 || (echo "Server is not running!" && exit 1)
+                    curl http://localhost:8000/get_hostname || (echo "Failed to reach API!" && exit 1)
+                    curl http://localhost:8000/get_ror
+                    curl http://localhost:8000/list_sut
+                    """
+            }
+        }
 
-        // stage('Test - PyTest') {
-        //     steps {
-        //         echo "Running pytest tests for commit ${COMMIT_ID}"
-        //         sh """
-        //             . ${env.WORKSPACE}/bin/python3 -m pytest 
-        //            """
-        //     }
-        // }
+        stage('Test - PyTest') {
+            steps {
+                echo "Running pytest tests for commit ${COMMIT_ID}"
+                sh """
+                    ${env.WORKSPACE}/bin/python3 -m pytest -m smoke
+                    ${env.WORKSPACE}/bin/python3 -m pytest -m api
+                    ${env.WORKSPACE}/bin/python3 -m pytest -m datadriven
+                   """
+            }
+        }
 
     
         stage('Code Linting') {
@@ -106,7 +106,6 @@ pipeline {
     post {
         always {
             echo "Pipeline completed for commit ${COMMIT_ID}"
-            // sh 'curl http://localhost:8000/list_sut'
         }
         success {
             echo "Build succeeded for commit ${COMMIT_ID}"

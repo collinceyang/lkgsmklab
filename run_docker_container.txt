@@ -1,0 +1,95 @@
+
+# create Dockerfile in ~/fastapi
+cd ~/fastapi
+
+# create docker image
+docker build -t fastapi-app3 . 
+docker build -t fastapi-app:v2 .
+
+docker build -t mono-app .
+
+# run docker image
+docker run -d -p 8000:8000 --name fastapi3-container fastapi-app3 
+docker run -d -p 8000:8000 --name fastapi4-container fastapi-app4
+
+docker run -d -p 8000:8000 --name mono-container mono-app
+
+#debug logs 
+docker logs mono-container
+
+# stop docker container
+docker ps
+docker ps -a
+docker stop <Containen_id_o_name>
+docker rm <Containen_id_o_name>
+
+# then re-run v2
+docker run -d -p 8000:8000 --name fastapi-app-container fastapi-app:v2
+
+# list image 
+docker images
+
+
+# remove all unused images 
+docker image prune 
+docker image prune -a
+
+# remove specific images
+docker cmi ‹inage id or name:tag>
+
+#check if http web application is up and running 
+docker ps 
+docker ps -a 
+docker images
+
+curl http://localhost:800/docs
+
+#check logs of container
+docker logs fastapi3-container
+
+#if container is running, make a shell to checl live content
+docker exec -it fastapi3-container /bin/bash
+
+#upload file to containers
+docker cp xyz.txt fastapi3-container:/app/xyz.txt
+
+#save docker iamge to file
+docker save -o fastapi-app3.tar fastapi-app4:latest
+
+# del un-used docker image
+
+# list image 
+docker images
+# find docker image_id
+
+# del docker image by image_id
+docker rmi image_id
+
+# if error msg Error response from daemon: conflict: unable to delete 59e1563efa7a (must be forced) - image is being used by stopped container 2272829d2b5e
+# we need remove all stopped containers
+docker rm 2272829d2b5e
+
+# then 
+docker rmi image_id
+
+
+
+# pull docker image from AWS ECR
+docker pull <aws_account_id>.dkr.ecr.<aws-region>.amazonaws.com/my-ecr-repo:latest
+
+docker pull 209479294112.dkr.ecr.us-east-1.amazonaws.com/mono-docker-app:latest
+docker pull 209479294112.dkr.ecr.us-east-1.amazonaws.com/mono-docker-app:latest
+docker run -d -p 8000:8000 --name mono-aws-dudocker 209479294112.dkr.ecr.us-east-1.amazonaws.com/mono-docker-app
+
+➜  learningsql-2875059 git:(main) ✗ docker ps
+CONTAINER ID   IMAGE                                                          COMMAND                  CREATED          STATUS          PORTS                       NAMES
+
+c07c2e8d5ad3   209479294112.dkr.ecr.us-east-1.amazonaws.com/mono-docker-app   "uvicorn app:app --h…"   29 seconds ago   Up 28 seconds   0.0.0.0:8000->8000/tcp      mono-aws-docker
+
+78104379de8d   kindest/node:v1.31.2                                           "/usr/local/bin/entr…"   6 weeks ago      Up 21 hours     127.0.0.1:55103->6443/tcp   k8s-mac-control-plane
+
+
+
+
+
+docker run -d -p 8000:8000 --name mono-aws-docker mono-docker-app

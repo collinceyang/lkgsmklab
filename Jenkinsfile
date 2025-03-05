@@ -74,9 +74,9 @@ pipeline {
 
         stage('Test - PyTest') {
             steps {
-                echo "Running tests for commit ${COMMIT_ID}"
+                echo "Running pytest tests for commit ${COMMIT_ID}"
                 sh """
-                    bash -c 'source ${env.WORKSPACE}/bin/activate && pytest'
+                    . ${env.WORKSPACE}/bin/activate && pytest 
                    """
             }
         }
